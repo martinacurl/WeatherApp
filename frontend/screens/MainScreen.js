@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import LocationInfo from "../components/LocationInfo/LocationInfo";
 
 export default function MainScreen() {
   return (
@@ -11,6 +12,7 @@ export default function MainScreen() {
       </View>
       <View>
         <Text>Placeholder for list of favorits</Text>
+        <LocationInfo />
       </View>
     </View>
   );
