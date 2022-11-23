@@ -1,18 +1,28 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import LocationInfo from "../components/LocationInfo/LocationInfo";
 
 export default function MainScreen() {
+  const [favoriteList, setFavoritList] = useState(["hej", "san"]);
+
+  const _renderItem = ({ item }) => {
+    return (
+      <View>
+        <Text>{item}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View>
         <Text>Placeholder for SearchBar</Text>
       </View>
       <View>
-        <Text>Placeholder for weather location/Malmö</Text>
+        <LocationInfo />
       </View>
       <View>
-        <Text>Placeholder for list of favorits</Text>
-        <LocationInfo />
+        <FlatList data={favoriteList} renderItem={_renderItem} />
       </View>
     </View>
   );
@@ -23,5 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 100,
   },
 });
