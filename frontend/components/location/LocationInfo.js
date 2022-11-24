@@ -1,71 +1,37 @@
 import * as Location from "expo-location";
-import { Linking, Text, View, StyleSheet } from "react-native";
+import { Linking, View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import LocationDisplay from "./LocationDisplay";
+import WeatherInfo from "../weather/WeatherInfo";
 
 const LocationInfo = ({ location, setLocation, api_key }) => {
   const [status, requestPermission] = Location.useForegroundPermissions();
-  const [weatherData, setWeatherData] = useState();
-  const [currentLoc, setCurrentLoc] = useState({
-    country: null,
-    city: null,
-    weather: null,
-  });
 
-  // checking location permissions - if granted - get current position
+  const [currentLat, setCurrentLat] = useState();
+  const [currentLong, setCurrentLong] = useState();
+
+  // checking location permissions - if granted - get and set current position
+  // if not, setting default values(location) to Malmö
   useEffect(() => {
     const getLocation = async () => {
-      if (status?.granted === false && status?.canAskAgain !== false) {
-        await requestPermission();
+      if (status?.granted === false) {
+        setCurrentLat(55.6052931);
+        setCurrentLong(13.0001566)
       } else if (status?.granted === true) {
         const loc = await Location.getCurrentPositionAsync();
         setLocation(loc);
-      } else if (status != null) {
-        Linking.openSettings();
+        setCurrentLat(loc.coords.latitude)
+        setCurrentLong(loc.coords.longitude)
       }
+      // else if (status != null) {
+      //     Linking.openSettings();
+      // }
     };
 
-    // if we dont have location yet, we ask for it and fetch malmo data until we have it
-    if (!location) {
-      getLocation();
-      fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q={Malmö}&limit=1&appid=${api_key}`
-      )
-        .then((res) => res.json())
-        .then((body) => {
-          console.log("GEOLOCATE body", body);
-          console.log(body[0].name);
-          console.log("LATITUDE", body[0].lat, "LONGITUDE", body[0].lon);
-        });
-    }
+    getLocation()
 
-    // if we have location we fetching data from API using long and lat
-    if (location) {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${location?.coords.latitude}&lon=${location?.coords.longitude}&appid=${api_key}&units=metric`
-      )
-        .then((res) => res.json())
-        .then((body) => {
-          console.log("WEATHER API: ", body);
-          // console.log(
-          //   "WEATHER; main temp: ",
-          //   body.main.temp,
-          //   "MAX",
-          //   body.main.temp_max,
-          //   "MIN",
-          //   body.main.temp_min,
-          //   "sunrise",
-          //   body.sys.sunrise
-          // );
-          setCurrentLoc({
-            city: body.name,
-            country: body.sys.country,
-            weather: body.weather[0].description,
-          });
-          setWeatherData(body.main.temp);
-        });
-    }
-  }, [status, location]);
+  }, [status])
+  
 
   if (status === null) {
     console.log("nullvärde på status");
@@ -74,7 +40,9 @@ const LocationInfo = ({ location, setLocation, api_key }) => {
 
   return (
     <View style={styles.currentLocationStyle}>
-      <LocationDisplay currentLoc={currentLoc} />
+      <WeatherInfo api_key={api_key}
+        currentLat={currentLat} 
+        currentLong={currentLong}/>
     </View>
   );
 };

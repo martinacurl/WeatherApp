@@ -1,41 +1,16 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Pressable,
-  TextInput,
-  Button,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import SearchBar from "../components/searchbar/SearchBar";
 import LocationInfo from "../components/location/LocationInfo";
-import FavoriteList from "../components/FavoriteList/FavoriteList";
-// import { useNavigation } from "@react-navigation/native";
+import FavoriteList from "../components/favoriteList/FavoriteList";
 import { AppBar } from "@react-native-material/core";
 
 export default function MainScreen() {
-  const api_key = "";
+  const api_key = "7987049bdcec1050b95c4cecb4ec496d";
 
   const [location, setLocation] = useState();
   const [favoriteList, setFavoriteList] = useState(["hej", "san"]);
-  const [searchInput, setSearchInput] = useState("");
 
-  // const nav = useNavigation();
-  const [currentLoc, setCurrentLoc] = useState({
-    country: null,
-    city: null,
-    weather: null,
-  });
-
-  const _renderItem = ({ item }) => {
-    return (
-      <View>
-        <Text>{item}</Text>
-      </View>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -55,24 +30,17 @@ export default function MainScreen() {
         <SearchBar
           favoriteList={favoriteList}
           setFavoriteList={setFavoriteList}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          currentLoc={currentLoc}
-          setCurrentLoc={setCurrentLoc}
-          api_key={api_key}
         />
       </AppBar>
 
-      {/* Current location weather or Malmö */}
+      {/* Current location weather or Malmö(default) */}
       <LocationInfo
         location={location}
         setLocation={setLocation}
-        currentLoc={currentLoc}
-        setCurrentLoc={setCurrentLoc}
         api_key={api_key}
       />
 
-      {/* List of favotites */}
+      {/* List of favorites */}
       <FavoriteList favoriteList={favoriteList} />
     </View>
   );

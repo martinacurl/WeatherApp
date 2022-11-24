@@ -1,54 +1,48 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import LocationDisplay from "../components/location/LocationDisplay";
 import { useState, useEffect } from "react";
-//Not in use yet, will be connected with pressable from main mainscreen searchbar lateon
+import WeatherDisplay from "../components/weatherDisplay/WeatherDisplay";
+
 export default function SearchResultScreen({ route }) {
-  const { setFavoriteList, searchInput, favoriteList, api_key } = route.params;
 
-  //will add the chosen weatherlocation to favoritesList, COMING SOON
-  // right now adding String to the "imaginativeList" and navigating back to mainscreen
+  const { setFavoriteList, searchInput, favoriteList } = route.params;
+  
+  const api_key = "7987049bdcec1050b95c4cecb4ec496d";
 
-  const [currentLoc, setCurrentLoc] = useState({
-    country: null,
-    city: null,
-    weather: null,
+  const nav = useNavigation();
+  
+  const [currentCity, setCurrentCity] = useState()
+  const [weatherData, setWeatherData] = useState({
+    temp: null,
+    weather: null
   });
-  const [weatherData, setWeatherData] = useState();
+  
+  useEffect(() => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${api_key}&units=metric`
+    )
+      .then((res) => res.json())
+      .then((body) => {
+        setCurrentCity(body.name);
+        setWeatherData({
+          temp: body.main.temp,
+          weather: body.weather[0].description
+        });
+      });
+  
+}, [])
 
+// will add the chosen weatherlocation to favoritesList, COMING SOON
+// right now adding searchInput to the "imaginativeList" and navigating back to mainscreen
   const handlePress = () => {
     nav.navigate("mainscreen");
-    setFavoriteList((prev) => prev.concat("test"));
+    setFavoriteList((prev) => prev.concat(searchInput));
   };
 
-  useEffect(() => {
-    if (searchInput && !currentLoc) {
-      fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${api_key}`
-      )
-        .then((res) => res.json())
-        .then((body) => {
-          if (!currentLoc) {
-            fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${body[0].lat}&lon=${body[0].lon}&appid=${api_key}&units=metric`
-            )
-              .then((res) => res.json())
-              .then((body) => {
-                setCurrentLoc({
-                  city: body.name,
-                  country: body.sys.country,
-                  weather: body.weather[0].description,
-                });
-                setWeatherData(body.main.temp);
-              });
-          }
-        });
-    }
-  }, [currentLoc, searchInput]);
 
   return (
     <View style={styles.container}>
-      <LocationDisplay currentLoc={currentLoc} weatherData={weatherData} />
+      <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
       <Pressable onPress={handlePress}>
         <Text style={{ margin: 10, padding: 10, backgroundColor: "#FFF" }}>
           Add to Favorites
@@ -62,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
 
   currentLocationStyle: {
