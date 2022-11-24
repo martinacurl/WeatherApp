@@ -1,17 +1,16 @@
 import * as Location from "expo-location";
 import { Linking, Text, View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
+import LocationDisplay from "./LocationDisplay";
 
-const LocationInfo = () => {
+const LocationInfo = ({ location, setLocation, api_key }) => {
   const [status, requestPermission] = Location.useForegroundPermissions();
-  const [location, setLocation] = useState();
   const [weatherData, setWeatherData] = useState();
   const [currentLoc, setCurrentLoc] = useState({
     country: null,
     city: null,
     weather: null,
   });
-  const api_key = "";
 
   // checking location permissions - if granted - get current position
   useEffect(() => {
@@ -48,16 +47,16 @@ const LocationInfo = () => {
         .then((res) => res.json())
         .then((body) => {
           console.log("WEATHER API: ", body);
-          console.log(
-            "WEATHER; main temp: ",
-            body.main.temp,
-            "MAX",
-            body.main.temp_max,
-            "MIN",
-            body.main.temp_min,
-            "sunrise",
-            body.sys.sunrise
-          );
+          // console.log(
+          //   "WEATHER; main temp: ",
+          //   body.main.temp,
+          //   "MAX",
+          //   body.main.temp_max,
+          //   "MIN",
+          //   body.main.temp_min,
+          //   "sunrise",
+          //   body.sys.sunrise
+          // );
           setCurrentLoc({
             city: body.name,
             country: body.sys.country,
@@ -75,19 +74,10 @@ const LocationInfo = () => {
 
   return (
     <View style={styles.currentLocationStyle}>
-      <Text style={styles.text}>WEATHER</Text>
-      <Text>Country: {currentLoc.country ? currentLoc.country : ""}</Text>
-      <Text>City: {currentLoc.city ? currentLoc.city : ""}</Text>
-      <Text>Weather: {currentLoc.weather ? currentLoc.weather : ""}</Text>
-      <Text>
-        Lat: {location?.coords.latitude}, Long: {location?.coords.longitude}
-      </Text>
-      <Text>Main temp: {weatherData}C</Text>
+      <LocationDisplay currentLoc={currentLoc} />
     </View>
   );
 };
-
-export default LocationInfo;
 
 const styles = StyleSheet.create({
   currentLocationStyle: {
@@ -101,6 +91,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
-    fontSize: 30
-  }
+    fontSize: 30,
+  },
 });
+
+export default LocationInfo;
