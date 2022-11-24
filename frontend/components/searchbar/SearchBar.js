@@ -1,45 +1,67 @@
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Button,
-  Pressable,
-  Text,
-} from "react-native";
+import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchBar = ({
-  location,
-  setLocation,
   searchInput,
   setSearchInput,
-  setClicked,
+  favoriteList,
+  setFavoriteList,
 }) => {
-  const latitude = location?.coords.latitude;
-  const longitude = location?.coords.longitude;
+  // create navigation connection
+  const nav = useNavigation();
 
-  //sets inputvalue to state
+  //sets input value to state
   const handelInput = (input) => {
     setSearchInput(input);
   };
 
-  //TODO when butten is clickt we need to check what lat/long that city has ang take ute city/country/weather and send sitty with info to switch Screens..
+  //Click function
   const handleClick = () => {
-    console.log("Pressable was clicked");
-    setClicked(true);
+    if (searchInput !== null) {
+      //TODO fix passing off setFavoriteList DONT KNOW HOW YET
+      nav.navigate("searchresultscreen", {
+        favoriteList,
+        setFavoriteList,
+        searchInput,
+      });
+    }
   };
 
   return (
-    <View>
+    <View style={styles.searchContainer}>
       <TextInput
+        style={styles.searchBox}
         placeholder="City"
         value={searchInput}
         onChangeText={handelInput}
       />
-      <Pressable onPress={handleClick}>
+      <Pressable style={styles.searchButton} onPress={handleClick}>
         <Text>Search</Text>
       </Pressable>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: 10,
+  },
+  searchBox: {
+    flex: 2,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    margin: 10,
+    padding: 10,
+  },
+  searchButton: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    margin: 10,
+    padding: 10,
+  },
+});
 
 export default SearchBar;

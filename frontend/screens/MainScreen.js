@@ -7,23 +7,27 @@ import {
   Pressable,
   TextInput,
   Button,
+  Dimensions,
 } from "react-native";
 import SearchBar from "../components/searchbar/SearchBar";
-import LocationInfo from "../components/LocationInfo/LocationInfo";
+import LocationInfo from "../components/location/LocationInfo";
 import FavoriteList from "../components/FavoriteList/FavoriteList";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
+import { AppBar } from "@react-native-material/core";
 
-export default function MainScreen({ route }) {
+export default function MainScreen() {
+  const api_key = "";
+
   const [location, setLocation] = useState();
-  const [favoriteList, setFavoritList] = useState(["hej", "san"]);
-
-  // const latitude = location?.coords.latitude;
-  // const longitude = location?.coords.longitude;
-
+  const [favoriteList, setFavoriteList] = useState(["hej", "san"]);
   const [searchInput, setSearchInput] = useState("");
-  const [clicked, setClicked] = useState(false);
 
-  const nav = useNavigation();
+  // const nav = useNavigation();
+  const [currentLoc, setCurrentLoc] = useState({
+    country: null,
+    city: null,
+    weather: null,
+  });
 
   const _renderItem = ({ item }) => {
     return (
@@ -36,23 +40,37 @@ export default function MainScreen({ route }) {
   return (
     <View style={styles.container}>
       {/* SEARCHBAR */}
-      <SearchBar
-        location={location}
-        setLocation={setLocation}
-        searchInput={searchInput}
-        setSearchInput={setSearchInput}
-        setClicked={setClicked}
-      />
-      <Pressable
-        onPress={() =>
-          nav.navigate("searchresultscreen", { favoriteList, setFavoriteList })
-        }
+      <AppBar
+        color="blue"
+        tintColor="black"
+        title="Todays Weather"
+        centerTitle={true}
+        titleStyle={[
+          {
+            fontWeight: "bold",
+            marginTop: 20,
+          },
+        ]}
       >
-        <Text>Search Bar Coming Soon, click me</Text>
-      </Pressable>
+        <SearchBar
+          favoriteList={favoriteList}
+          setFavoriteList={setFavoriteList}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          currentLoc={currentLoc}
+          setCurrentLoc={setCurrentLoc}
+          api_key={api_key}
+        />
+      </AppBar>
 
       {/* Current location weather or Malmö */}
-      <LocationInfo location={location} setLocation={setLocation} />
+      <LocationInfo
+        location={location}
+        setLocation={setLocation}
+        currentLoc={currentLoc}
+        setCurrentLoc={setCurrentLoc}
+        api_key={api_key}
+      />
 
       {/* List of favotites */}
       <FavoriteList favoriteList={favoriteList} />
@@ -61,10 +79,15 @@ export default function MainScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontWeight: "bold",
+    fontSize: 50,
+  },
   container: {
     flex: 1,
-    alignItems: "center",
+    //   alignItems: "center",
     // justifyContent: "space-around",
-    marginTop: 100,
+    //   marginTop: 100,
+    //   width: Dimensions.get("window").width,
   },
 });
