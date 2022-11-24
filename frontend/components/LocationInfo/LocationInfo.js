@@ -2,9 +2,8 @@ import * as Location from "expo-location";
 import { Linking, Text, View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 
-const LocationInfo = () => {
+const LocationInfo = ({ location, setLocation }) => {
   const [status, requestPermission] = Location.useForegroundPermissions();
-  const [location, setLocation] = useState();
   const [weatherData, setWeatherData] = useState();
   const [currentLoc, setCurrentLoc] = useState({
     country: null,
