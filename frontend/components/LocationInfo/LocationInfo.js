@@ -74,6 +74,7 @@ const LocationInfo = ({ location, setLocation }) => {
 
   return (
     <View style={styles.currentLocationStyle}>
+      <Text style={styles.text}>WEATHER</Text>
       <Text>Country: {currentLoc.country ? currentLoc.country : ""}</Text>
       <Text>City: {currentLoc.city ? currentLoc.city : ""}</Text>
       <Text>Weather: {currentLoc.weather ? currentLoc.weather : ""}</Text>
@@ -89,11 +90,16 @@ export default LocationInfo;
 
 const styles = StyleSheet.create({
   currentLocationStyle: {
-    flex: 1,
+    // när det blir flex 1 här - försvinner den från main screen
+    // flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
 
     margin: 10,
     padding: 10,
   },
+  text: {
+    fontWeight: "bold",
+    fontSize: 30
+  }
 });

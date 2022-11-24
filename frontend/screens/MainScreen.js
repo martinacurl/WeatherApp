@@ -6,11 +6,14 @@ import {
   FlatList,
   Pressable,
   TextInput,
+  Button,
 } from "react-native";
-import LocationInfo from "../components/LocationInfo/LocationInfo";
 import SearchBar from "../components/searchbar/SearchBar";
+import LocationInfo from "../components/LocationInfo/LocationInfo";
+import FavoriteList from "../components/FavoriteList/FavoriteList";
+import { useNavigation } from "@react-navigation/native";
 
-export default function MainScreen() {
+export default function MainScreen({ route }) {
   const [location, setLocation] = useState();
   const [favoriteList, setFavoritList] = useState(["hej", "san"]);
 
@@ -19,6 +22,8 @@ export default function MainScreen() {
 
   const [searchInput, setSearchInput] = useState("");
   const [clicked, setClicked] = useState(false);
+
+  const nav = useNavigation();
 
   const _renderItem = ({ item }) => {
     return (
@@ -38,12 +43,19 @@ export default function MainScreen() {
         setSearchInput={setSearchInput}
         setClicked={setClicked}
       />
+      <Pressable
+        onPress={() =>
+          nav.navigate("searchresultscreen", { favoriteList, setFavoriteList })
+        }
+      >
+        <Text>Search Bar Coming Soon, click me</Text>
+      </Pressable>
 
       {/* Current location weather or Malmö */}
       <LocationInfo location={location} setLocation={setLocation} />
 
       {/* List of favotites */}
-      <FlatList data={favoriteList} renderItem={_renderItem} />
+      <FavoriteList favoriteList={favoriteList} />
     </View>
   );
 }
@@ -52,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
+    // justifyContent: "space-around",
+    marginTop: 100,
   },
 });
