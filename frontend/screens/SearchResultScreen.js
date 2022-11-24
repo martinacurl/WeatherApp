@@ -7,7 +7,7 @@ export default function SearchResultScreen({ route }) {
 
   const { setFavoriteList, searchInput, favoriteList } = route.params;
   
-  const api_key = "7987049bdcec1050b95c4cecb4ec496d";
+  const api_key = "";
 
   const nav = useNavigation();
   
