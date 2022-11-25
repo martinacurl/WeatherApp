@@ -16,22 +16,20 @@ const LocationInfo = ({ location, setLocation, api_key }) => {
     const getLocation = async () => {
       if (status?.granted === false) {
         setCurrentLat(55.6052931);
-        setCurrentLong(13.0001566)
+        setCurrentLong(13.0001566);
       } else if (status?.granted === true) {
         const loc = await Location.getCurrentPositionAsync();
         setLocation(loc);
-        setCurrentLat(loc.coords.latitude)
-        setCurrentLong(loc.coords.longitude)
+        setCurrentLat(loc.coords.latitude);
+        setCurrentLong(loc.coords.longitude);
       }
       // else if (status != null) {
       //     Linking.openSettings();
       // }
     };
 
-    getLocation()
-
-  }, [status])
-  
+    getLocation();
+  }, [status]);
 
   if (status === null) {
     console.log("nullvärde på status");
@@ -40,20 +38,18 @@ const LocationInfo = ({ location, setLocation, api_key }) => {
 
   return (
     <View style={styles.currentLocationStyle}>
-      <WeatherInfo api_key={api_key}
-        currentLat={currentLat} 
-        currentLong={currentLong}/>
+      <WeatherInfo
+        api_key={api_key}
+        currentLat={currentLat}
+        currentLong={currentLong}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   currentLocationStyle: {
-    // när det blir flex 1 här - försvinner den från main screen
-    // flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
-
     margin: 10,
     padding: 10,
   },

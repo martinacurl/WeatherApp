@@ -2,8 +2,7 @@ import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
-
-const SearchBar = ({ favoriteList, setFavoriteList }) => {
+const SearchBar = ({ setFavoriteList }) => {
   // create navigation connection
   const nav = useNavigation();
   const [searchInput, setSearchInput] = useState("");
@@ -19,7 +18,6 @@ const SearchBar = ({ favoriteList, setFavoriteList }) => {
       //getLocation? function
       //TODO fix passing off setFavoriteList DONT KNOW HOW YET
       nav.navigate("searchresultscreen", {
-        favoriteList,
         setFavoriteList,
         searchInput,
       });
@@ -53,6 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     margin: 10,
     padding: 10,
+    borderRadius: 15,
   },
   searchButton: {
     flex: 1,
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     margin: 10,
     padding: 10,
+    borderRadius: 15,
   },
 });
 
