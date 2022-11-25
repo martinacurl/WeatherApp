@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
-import WeatherDisplay from "../components/weatherDisplay/WeatherDisplay";
+import WeatherDisplay from "../components/weather/WeatherDisplay";
 
 export default function SearchResultScreen({ route }) {
 
   const { setFavoriteList, searchInput, favoriteList } = route.params;
   
-  const api_key = "";
+  const api_key = "7987049bdcec1050b95c4cecb4ec496d";
 
   const nav = useNavigation();
   
