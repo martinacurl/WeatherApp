@@ -13,7 +13,7 @@ import WeatherDisplay from "../components/weather/WeatherDisplay";
 export default function SearchResultScreen({ route }) {
   const { setFavoriteList, searchInput } = route.params;
 
-  const api_key = "b68ff9cddd3274b2c71b65a0ce479b7c";
+  const api_key = "";
 
   const nav = useNavigation();
 

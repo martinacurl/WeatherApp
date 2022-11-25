@@ -6,7 +6,7 @@ import FavoriteList from "../components/favoritelist/FavoriteList";
 import { AppBar } from "@react-native-material/core";
 
 export default function MainScreen() {
-  const api_key = "7987049bdcec1050b95c4cecb4ec496d";
+  const api_key = "";
 
   const [location, setLocation] = useState();
   const [favoriteList, setFavoriteList] = useState(["hej", "san"]);

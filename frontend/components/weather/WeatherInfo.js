@@ -30,10 +30,11 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
   return (
     // MAYBE USE WEATHER DISPLAY HERE, TOO, INSTEAD OF REPEATING
     <View style={styles.currentLocationStyle}>
-      <Text style={styles.text}>Weather Info</Text>
+      <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
+      {/* <Text style={styles.text}>Weather Info</Text>
       <Text>City: {currentCity}</Text>
       <Text>Temp: {weatherData.temp}°C</Text>
-      <Text>Weather: {weatherData.weather}</Text>
+      <Text>Weather: {weatherData.weather}</Text> */}
     </View>
   );
 };
