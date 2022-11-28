@@ -53,8 +53,7 @@ export default function MainScreen() {
             },
           ]}
         >
-          <SearchBar
-          />
+          <SearchBar />
         </AppBar>
 
         {/* Current location weather or Malmö(default) */}

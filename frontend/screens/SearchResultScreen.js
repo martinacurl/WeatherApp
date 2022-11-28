@@ -51,7 +51,8 @@ export default function SearchResultScreen({ route }) {
             weather: body.weather[0].description,
           });
         }
-      });
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   // adding searched weatherlocation to favoritesList

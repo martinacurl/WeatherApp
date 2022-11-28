@@ -16,14 +16,12 @@ export default function App() {
   useEffect(() => {
     initDB()
       .then((res) => {
-        console.log(res);
         return getTableInfo();
       })
       .then((res) => {
-        console.log(
-          res.rows._array.map((row) => `${row.cid} ${row.name} ${row.type}`)
-        );
-        setDbInit(true);
+        if (res) {
+          setDbInit(true);
+        }
       });
   }, []);
 
