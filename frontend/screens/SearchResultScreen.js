@@ -15,10 +15,7 @@ import WeatherFavorite from "../entities/WeatherFavorite";
 
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
-  // const { city, lat, long } = route.params.favorite;
-  // if (searchInput === null) {
-  //   searchInput = city;
-  // }
+
   console.log("dddddddddddddddddddddddddddddddddddddddd", route.params);
 
   const api_key = "";
@@ -33,7 +30,7 @@ export default function SearchResultScreen({ route }) {
   });
 
   useEffect(() => {
-    console.log(searchInput || favorite.city);
+    // console.log(searchInput || favorite.city);
 
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${
@@ -42,7 +39,7 @@ export default function SearchResultScreen({ route }) {
     )
       .then((res) => res.json())
       .then((body) => {
-        console.log(body);
+        // console.log(body);
         const lat = body.coord.lat;
         const lon = body.coord.lon;
 
@@ -59,18 +56,14 @@ export default function SearchResultScreen({ route }) {
       });
   }, []);
 
-  // will add the chosen weatherlocation to favoritesList, COMING SOON
-  // right now adding searchInput to the "imaginativeList" and navigating back to mainscreen
+  //function to handle insertien of new favorite in database, and if checks if renderToMainScreen will be detectice and navigat to mainscreen
   const handlePress = async () => {
     await insert(
       new WeatherFavorite(currentCity, geoResult.lat, geoResult.lon)
     );
-    // const res = await findAll();
-    // console.log("findall", res);
-    // setFavoriteList(res);
+
     DeviceEventEmitter.emit("renderToMainScreen");
     nav.navigate("mainscreen");
-    // setFavoriteList((prev) => prev.concat(searchInput));
   };
 
   return (
@@ -83,6 +76,12 @@ export default function SearchResultScreen({ route }) {
         <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
         <Pressable style={styles.button} onPress={handlePress}>
           <Text style={styles.buttonText}>Add to Favorites</Text>
+        </Pressable>
+        <Pressable
+          style={styles.button}
+          onPress={() => nav.navigate("mainscreen")}
+        >
+          <Text style={styles.buttonText}>Go Back</Text>
         </Pressable>
       </View>
     </ImageBackground>

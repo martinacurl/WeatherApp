@@ -69,3 +69,17 @@ export const findAll = () => {
     });
   });
 };
+
+//function to delete city from favorits
+export const deleteByCityName = (city) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((transaction) => {
+      transaction.executeSql(
+        `DELETE FROM weatherlocation WHERE city = ?`,
+        [city],
+        (_, res) => resolve(res),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};

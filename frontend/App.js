@@ -44,7 +44,7 @@ export default function App() {
           component={MainScreen}
         />
         <Stack.Screen
-          // options={{ headerShown: false }}
+          options={{ headerShown: false }}
           name="searchresultscreen"
           component={SearchResultScreen}
         />

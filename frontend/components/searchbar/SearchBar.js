@@ -24,8 +24,6 @@ const SearchBar = ({ api_key }) => {
     Keyboard.dismiss();
 
     if (searchInput !== null) {
-      //getLocation? function
-      //TODO fix passing off setFavoriteList DONT KNOW HOW YET
       nav.navigate("searchresultscreen", {
         searchInput,
         api_key,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import WeatherDisplay from "./WeatherDisplay";
 
 const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
@@ -28,13 +28,8 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
   }, [currentLat]);
 
   return (
-    // MAYBE USE WEATHER DISPLAY HERE, TOO, INSTEAD OF REPEATING
     <View style={styles.currentLocationStyle}>
       <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
-      {/* <Text style={styles.text}>Weather Info</Text>
-      <Text>City: {currentCity}</Text>
-      <Text>Temp: {weatherData.temp}°C</Text>
-      <Text>Weather: {weatherData.weather}</Text> */}
     </View>
   );
 };
