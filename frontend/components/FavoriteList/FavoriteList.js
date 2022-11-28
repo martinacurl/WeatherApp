@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   FlatList,
@@ -8,11 +9,16 @@ import {
 } from "react-native";
 
 const FavoriteList = ({ favoriteList }) => {
-  const _renderItem = ({ item }) => {
+  const nav = useNavigation();
+
+  const _renderItem = ({ item: favorite }) => {
     return (
       <View>
-        <Pressable style={styles.favoriteButton}>
-          <Text style={styles.favoriteText}>{item}</Text>
+        <Pressable
+          style={styles.favoriteButton}
+          onPress={() => nav.navigate("searchresultscreen", { favorite })}
+        >
+          <Text style={styles.favoriteText}>{favorite.city}</Text>
         </Pressable>
       </View>
     );

@@ -1,14 +1,30 @@
-import { useState } from "react";
-import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  DeviceEventEmitter,
+} from "react-native";
 import SearchBar from "../components/searchbar/SearchBar";
 import LocationInfo from "../components/location/LocationInfo";
 import FavoriteList from "../components/favoritelist/FavoriteList";
 import { AppBar } from "@react-native-material/core";
+import { findAll } from "../utils/db";
 
 export default function MainScreen() {
   const api_key = "";
 
-  const [favoriteList, setFavoriteList] = useState(["hej", "san"]);
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  useEffect(() => {
+    DeviceEventEmitter.addListener("renderToMainScreen", async () => {
+      const res = await findAll();
+      setFavoriteList(res);
+    });
+
+    findAll().then((res) => setFavoriteList(res));
+  }, []);
 
   return (
     <ImageBackground

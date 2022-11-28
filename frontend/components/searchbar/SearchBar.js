@@ -1,4 +1,11 @@
-import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  Text,
+  Keyboard,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
@@ -14,6 +21,8 @@ const SearchBar = ({ api_key }) => {
 
   //Sending input (city) from the search bar to SearchResultScreen to show weather data
   const handleClick = () => {
+    Keyboard.dismiss();
+
     if (searchInput !== null) {
       //getLocation? function
       //TODO fix passing off setFavoriteList DONT KNOW HOW YET
