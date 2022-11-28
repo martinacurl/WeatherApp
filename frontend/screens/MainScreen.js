@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import SearchBar from "../components/searchbar/SearchBar";
 import LocationInfo from "../components/location/LocationInfo";
-import FavoriteList from "../components/favoritelist/FavoriteList";
+import FavoriteList from "../components/favoriteList/FavoriteList";
 import { AppBar } from "@react-native-material/core";
 import { deleteByCityName, findAll } from "../utils/db";
 
@@ -54,9 +54,6 @@ export default function MainScreen() {
           ]}
         >
           <SearchBar
-            // favoriteList={favoriteList}
-            setFavoriteList={setFavoriteList}
-            api_key={api_key}
           />
         </AppBar>
 

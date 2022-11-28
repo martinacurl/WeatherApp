@@ -1,12 +1,11 @@
 import * as Location from "expo-location";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import WeatherInfo from "../weather/WeatherInfo";
 
 const LocationInfo = ({ api_key }) => {
   const [status, requestPermission] = Location.useForegroundPermissions();
 
-  const [location, setLocation] = useState();
   const [currentLat, setCurrentLat] = useState();
   const [currentLong, setCurrentLong] = useState();
 
@@ -20,13 +19,9 @@ const LocationInfo = ({ api_key }) => {
         await requestPermission();
       } else if (status?.granted === true) {
         const loc = await Location.getCurrentPositionAsync();
-        setLocation(loc);
         setCurrentLat(loc.coords.latitude);
         setCurrentLong(loc.coords.longitude);
       }
-      // else if (status != null) {
-      //     Linking.openSettings();a
-      // }
     };
 
     getLocation();

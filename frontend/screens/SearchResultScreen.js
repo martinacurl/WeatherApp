@@ -6,6 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   DeviceEventEmitter,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
@@ -15,8 +16,6 @@ import WeatherFavorite from "../entities/WeatherFavorite";
 
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
-
-  console.log("dddddddddddddddddddddddddddddddddddddddd", route.params);
 
   const api_key = "";
 
@@ -39,29 +38,27 @@ export default function SearchResultScreen({ route }) {
     )
       .then((res) => res.json())
       .then((body) => {
-        // console.log(body);
-        const lat = body.coord.lat;
-        const lon = body.coord.lon;
-
-        setGeoResult({
-          lon,
-          lat,
-        });
-
-        setCurrentCity(body.name);
-        setWeatherData({
-          temp: body.main.temp,
-          weather: body.weather[0].description,
-        });
+        if (body.message == "city not found") {
+          nav.navigate("mainscreen");
+          Alert.alert("City not found. Try again.");
+        } else {
+          const lat = body.coord.lat;
+          const lon = body.coord.lon;
+          setGeoResult({ lon, lat });
+          setCurrentCity(body.name);
+          setWeatherData({
+            temp: body.main.temp,
+            weather: body.weather[0].description,
+          });
+        }
       });
   }, []);
 
-  //function to handle insertien of new favorite in database, and if checks if renderToMainScreen will be detectice and navigat to mainscreen
+  // adding searched weatherlocation to favoritesList
   const handlePress = async () => {
     await insert(
       new WeatherFavorite(currentCity, geoResult.lat, geoResult.lon)
     );
-
     DeviceEventEmitter.emit("renderToMainScreen");
     nav.navigate("mainscreen");
   };
