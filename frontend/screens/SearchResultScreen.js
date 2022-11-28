@@ -9,26 +9,56 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import WeatherDisplay from "../components/weather/WeatherDisplay";
+import { insert, findAll } from "../utils/db";
+import WeatherFavorite from "../entities/WeatherFavorite";
 
 export default function SearchResultScreen({ route }) {
-  const { setFavoriteList, searchInput } = route.params;
-
+  const { searchInput } = route.params;
   const api_key = "";
 
   const nav = useNavigation();
 
+  const [geoResult, setGeoResult] = useState({ lon: null, lat: null });
   const [currentCity, setCurrentCity] = useState();
   const [weatherData, setWeatherData] = useState({
     temp: null,
     weather: null,
   });
 
+  // const fetchlonglat = async () => {
+  //   await
+  // };
+
   useEffect(() => {
+    // fetch(
+    //   `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${api_key}`
+    // )
+    //   .then((res) => res.json())
+    //   .then((body) => {
+    //     const lat = body[0].lat;
+    //     const lon = body[0].lon;
+
+    //     setGeoResult({
+    //       lon,
+    //       lat,
+    //     });
+    //     console.log(geoResult);
+    //   });
+
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${api_key}&units=metric`
     )
       .then((res) => res.json())
       .then((body) => {
+        console.log(body);
+        const lat = body.coord.lat;
+        const lon = body.coord.lon;
+
+        setGeoResult({
+          lon,
+          lat,
+        });
+
         setCurrentCity(body.name);
         setWeatherData({
           temp: body.main.temp,
@@ -39,9 +69,18 @@ export default function SearchResultScreen({ route }) {
 
   // will add the chosen weatherlocation to favoritesList, COMING SOON
   // right now adding searchInput to the "imaginativeList" and navigating back to mainscreen
-  const handlePress = () => {
+  const handlePress = async () => {
+    console.log("city ant lat/long inserted to DB");
+    await insert(
+      new WeatherFavorite(currentCity, geoResult.lat, geoResult.lon)
+    );
+    // const res = await findAll();
+    // console.log("findall", res);
+    // setFavoriteList(res);
+    console.log("city ant lat/long inserted to DB");
+
     nav.navigate("mainscreen");
-    setFavoriteList((prev) => prev.concat(searchInput));
+    // setFavoriteList((prev) => prev.concat(searchInput));
   };
 
   return (
