@@ -28,7 +28,7 @@ const LocationInfo = ({ api_key }) => {
   }, [status]);
 
   if (status === null) {
-    console.log("nullvärde på status");
+    console.log("nullvärde på status"); //laddnings icon?
     return <View />;
   }
 

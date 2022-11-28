@@ -20,7 +20,8 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
           temp: body.main.temp,
           weather: body.weather[0].description,
         });
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   useEffect(() => {

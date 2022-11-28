@@ -39,19 +39,20 @@ export default function SearchResultScreen({ route }) {
       .then((res) => res.json())
       .then((body) => {
         if (body.message == "city not found") {
-          nav.navigate('mainscreen')
-          Alert.alert("City not found. Try again.")
+          nav.navigate("mainscreen");
+          Alert.alert("City not found. Try again.");
         } else {
           const lat = body.coord.lat;
           const lon = body.coord.lon;
-          setGeoResult({lon, lat});
+          setGeoResult({ lon, lat });
           setCurrentCity(body.name);
           setWeatherData({
             temp: body.main.temp,
             weather: body.weather[0].description,
           });
-        };
+        }
       })
+      .catch((e) => console.log(e));
   }, []);
 
   // adding searched weatherlocation to favoritesList
@@ -71,17 +72,15 @@ export default function SearchResultScreen({ route }) {
     >
       <View style={styles.container}>
         <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
-        {searchInput ?
-           <Pressable style={styles.button} onPress={handlePress}>
-           <Text style={styles.buttonText}>Add to Favorites</Text>
-           </Pressable>
-          :
-          <Pressable style={styles.button} onPress={() => nav.navigate("mainscreen")}>
-            <Text style={styles.buttonText}>Go Back</Text>
-           </Pressable>
-         
-        }
-        
+        <Pressable style={styles.button} onPress={handlePress}>
+          <Text style={styles.buttonText}>Add to Favorites</Text>
+        </Pressable>
+        <Pressable
+          style={styles.button}
+          onPress={() => nav.navigate("mainscreen")}
+        >
+          <Text style={styles.buttonText}>Go Back</Text>
+        </Pressable>
       </View>
     </ImageBackground>
   );

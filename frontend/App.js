@@ -16,14 +16,12 @@ export default function App() {
   useEffect(() => {
     initDB()
       .then((res) => {
-        console.log(res);
         return getTableInfo();
       })
       .then((res) => {
-        console.log(
-          res.rows._array.map((row) => `${row.cid} ${row.name} ${row.type}`)
-        );
-        setDbInit(true);
+        if (res) {
+          setDbInit(true);
+        }
       });
   }, []);
 
@@ -44,7 +42,7 @@ export default function App() {
           component={MainScreen}
         />
         <Stack.Screen
-          // options={{ headerShown: false }}
+          options={{ headerShown: false }}
           name="searchresultscreen"
           component={SearchResultScreen}
         />

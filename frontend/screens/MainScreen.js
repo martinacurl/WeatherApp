@@ -10,7 +10,7 @@ import SearchBar from "../components/searchbar/SearchBar";
 import LocationInfo from "../components/location/LocationInfo";
 import FavoriteList from "../components/favoriteList/FavoriteList";
 import { AppBar } from "@react-native-material/core";
-import { findAll } from "../utils/db";
+import { deleteByCityName, findAll } from "../utils/db";
 
 export default function MainScreen() {
   const api_key = "";
@@ -19,6 +19,12 @@ export default function MainScreen() {
 
   useEffect(() => {
     DeviceEventEmitter.addListener("renderToMainScreen", async () => {
+      const res = await findAll();
+      setFavoriteList(res);
+    });
+
+    DeviceEventEmitter.addListener("RemoveByCityName", async (city) => {
+      await deleteByCityName(city);
       const res = await findAll();
       setFavoriteList(res);
     });
@@ -47,8 +53,7 @@ export default function MainScreen() {
             },
           ]}
         >
-          <SearchBar
-          />
+          <SearchBar />
         </AppBar>
 
         {/* Current location weather or Malmö(default) */}

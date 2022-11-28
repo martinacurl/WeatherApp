@@ -22,9 +22,9 @@ const SearchBar = () => {
   //Sending input (city) from the search bar to SearchResultScreen to show weather data
   const handleClick = () => {
     Keyboard.dismiss();
-    setSearchInput("")
+    setSearchInput("");
     if (searchInput !== null) {
-      nav.navigate("searchresultscreen", {searchInput});
+      nav.navigate("searchresultscreen", { searchInput });
     }
   };
 

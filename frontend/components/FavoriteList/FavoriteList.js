@@ -6,20 +6,30 @@ import {
   StyleSheet,
   Pressable,
   Dimensions,
+  DeviceEventEmitter,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const FavoriteList = ({ favoriteList }) => {
   const nav = useNavigation();
 
   const _renderItem = ({ item: favorite }) => {
+    const handleDelete = () => {
+      console.log("DELETE", favorite.city);
+
+      DeviceEventEmitter.emit("RemoveByCityName", favorite.city);
+      nav.navigate("mainscreen", {});
+    };
+
     return (
-      <View>
+      <View style={styles.favotiteContainer}>
         <Pressable
           style={styles.favoriteButton}
           onPress={() => nav.navigate("searchresultscreen", { favorite })}
         >
           <Text style={styles.favoriteText}>{favorite.city}</Text>
         </Pressable>
+        <Icon name="delete" size={30} color="black" onPress={handleDelete} />
       </View>
     );
   };
@@ -41,6 +51,11 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
     fontSize: 25,
+  },
+  favotiteContainer: {
+    justifyContent: "space-around",
+    flexDirection: "row",
+    alignItems: "center",
   },
   favoriteButton: {
     justifyContent: "center",
