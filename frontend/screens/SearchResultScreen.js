@@ -6,6 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   DeviceEventEmitter,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
@@ -15,11 +16,6 @@ import WeatherFavorite from "../entities/WeatherFavorite";
 
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
-  // const { city, lat, long } = route.params.favorite;
-  // if (searchInput === null) {
-  //   searchInput = city;
-  // }
-  console.log("dddddddddddddddddddddddddddddddddddddddd", route.params);
 
   const api_key = "";
 
@@ -33,7 +29,7 @@ export default function SearchResultScreen({ route }) {
   });
 
   useEffect(() => {
-    console.log(searchInput || favorite.city);
+    // console.log(searchInput || favorite.city);
 
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${
@@ -42,35 +38,29 @@ export default function SearchResultScreen({ route }) {
     )
       .then((res) => res.json())
       .then((body) => {
-        console.log(body);
-        const lat = body.coord.lat;
-        const lon = body.coord.lon;
-
-        setGeoResult({
-          lon,
-          lat,
-        });
-
-        setCurrentCity(body.name);
-        setWeatherData({
-          temp: body.main.temp,
-          weather: body.weather[0].description,
-        });
-      });
+        if (body.message == "city not found") {
+          nav.navigate('mainscreen')
+          Alert.alert("City not found. Try again.")
+        } else {
+          const lat = body.coord.lat;
+          const lon = body.coord.lon;
+          setGeoResult({lon, lat});
+          setCurrentCity(body.name);
+          setWeatherData({
+            temp: body.main.temp,
+            weather: body.weather[0].description,
+          });
+        };
+      })
   }, []);
 
-  // will add the chosen weatherlocation to favoritesList, COMING SOON
-  // right now adding searchInput to the "imaginativeList" and navigating back to mainscreen
+  // adding searched weatherlocation to favoritesList
   const handlePress = async () => {
     await insert(
       new WeatherFavorite(currentCity, geoResult.lat, geoResult.lon)
     );
-    // const res = await findAll();
-    // console.log("findall", res);
-    // setFavoriteList(res);
     DeviceEventEmitter.emit("renderToMainScreen");
     nav.navigate("mainscreen");
-    // setFavoriteList((prev) => prev.concat(searchInput));
   };
 
   return (
@@ -81,9 +71,17 @@ export default function SearchResultScreen({ route }) {
     >
       <View style={styles.container}>
         <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
-        <Pressable style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Add to Favorites</Text>
-        </Pressable>
+        {searchInput ?
+           <Pressable style={styles.button} onPress={handlePress}>
+           <Text style={styles.buttonText}>Add to Favorites</Text>
+           </Pressable>
+          :
+          <Pressable style={styles.button} onPress={() => nav.navigate("mainscreen")}>
+            <Text style={styles.buttonText}>Go Back</Text>
+           </Pressable>
+         
+        }
+        
       </View>
     </ImageBackground>
   );
