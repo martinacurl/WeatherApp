@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
-const SearchBar = ({ setFavoriteList }) => {
+const SearchBar = ({ api_key }) => {
   // create navigation connection
   const nav = useNavigation();
   const [searchInput, setSearchInput] = useState("");
@@ -18,8 +18,8 @@ const SearchBar = ({ setFavoriteList }) => {
       //getLocation? function
       //TODO fix passing off setFavoriteList DONT KNOW HOW YET
       nav.navigate("searchresultscreen", {
-        setFavoriteList,
         searchInput,
+        api_key,
       });
     }
   };

@@ -8,7 +8,6 @@ import { AppBar } from "@react-native-material/core";
 export default function MainScreen() {
   const api_key = "";
 
-  const [location, setLocation] = useState();
   const [favoriteList, setFavoriteList] = useState(["hej", "san"]);
 
   return (
@@ -33,17 +32,14 @@ export default function MainScreen() {
           ]}
         >
           <SearchBar
-            favoriteList={favoriteList}
+            // favoriteList={favoriteList}
             setFavoriteList={setFavoriteList}
+            api_key={api_key}
           />
         </AppBar>
 
         {/* Current location weather or Malmö(default) */}
-        <LocationInfo
-          location={location}
-          setLocation={setLocation}
-          api_key={api_key}
-        />
+        <LocationInfo api_key={api_key} />
 
         {/* List of favorites */}
         <FavoriteList favoriteList={favoriteList} />
