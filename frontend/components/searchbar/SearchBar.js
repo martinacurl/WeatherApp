@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
-const SearchBar = ({ api_key }) => {
+const SearchBar = () => {
   // create navigation connection
   const nav = useNavigation();
   const [searchInput, setSearchInput] = useState("");
@@ -22,14 +22,9 @@ const SearchBar = ({ api_key }) => {
   //Sending input (city) from the search bar to SearchResultScreen to show weather data
   const handleClick = () => {
     Keyboard.dismiss();
-
+    setSearchInput("")
     if (searchInput !== null) {
-      //getLocation? function
-      //TODO fix passing off setFavoriteList DONT KNOW HOW YET
-      nav.navigate("searchresultscreen", {
-        searchInput,
-        api_key,
-      });
+      nav.navigate("searchresultscreen", {searchInput});
     }
   };
 
