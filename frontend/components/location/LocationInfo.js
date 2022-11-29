@@ -6,50 +6,41 @@ import WeatherInfo from "../weather/WeatherInfo";
 const LocationInfo = ({ api_key }) => {
   const [status, requestPermission] = Location.useForegroundPermissions();
 
-  const [location, setLocation] = useState();
-  const [currentLat, setCurrentLat] = useState();
-  const [currentLong, setCurrentLong] = useState();
+  const [location, setLocation] = useState(null);
+  const [currentLat, setCurrentLat] = useState(null);
+  const [currentLong, setCurrentLong] = useState(null);
 
   // checking location permissions - if granted - get and set current position
   // if not, setting default values(location) to Malmö
   useEffect(() => {
-    const getLocation = async () => {      
+    const getLocation = async () => {
       if (status?.granted === false && status?.canAskAgain !== false) {
         await requestPermission();
         // setCurrentLat(55.6052931);
         // setCurrentLong(13.0001566);
-      }
-      else if (status?.granted === true) {
+      } else if (status?.granted === true) {
         const loc = await Location.getCurrentPositionAsync();
-        
-        console.log("LOC in uEff", loc);
-        setLocation(loc)
+        setLocation(loc);
       } else if (status != null) {
         setCurrentLat(55.6052931);
         setCurrentLong(13.0001566);
       }
     };
 
-    getLocation();
+    getLocation(); //generate to fast?!
   }, [status]);
 
   if (status === null) {
-    console.log("nullvärde på status"); //laddnings icon?
+    console.log("nullvärde på status");
     return <View />;
   }
 
   return (
     <View style={styles.currentLocationStyle}>
-      <Text>CurrentLat: {currentLat}</Text>
-      <Text>CurrentLong: {currentLong}</Text>
-      <Text>Location.coords.lat: { location?.coords.latitude}</Text>
-      <Text>Location.coords.long: { location?.coords.longitude}</Text>
       <WeatherInfo
         api_key={api_key}
-        currentLat={ !currentLat ? 
-          location?.coords.latitude : currentLat}
-        currentLong={ !currentLong ?
-          location?.coords.longitude : currentLong }
+        currentLat={!currentLat ? location?.coords.latitude : currentLat}
+        currentLong={!currentLong ? location?.coords.longitude : currentLong}
       />
     </View>
   );
