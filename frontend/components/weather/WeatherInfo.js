@@ -10,11 +10,12 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
   });
 
   const getCurrentWeather = () => {
-    fetch(
+     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${currentLat}&lon=${currentLong}&appid=${api_key}&units=metric`
     )
       .then((res) => res.json())
       .then((body) => {
+        console.log("TEST", body);
         setCurrentCity(body.name);
         setWeatherData({
           temp: body.main.temp,
