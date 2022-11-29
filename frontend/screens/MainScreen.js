@@ -13,7 +13,7 @@ import { AppBar } from "@react-native-material/core";
 import { deleteByCityName, findAll } from "../utils/db";
 
 export default function MainScreen() {
-  const api_key = "5500869bb7a76a46adb61160ae56bf19";
+  const api_key = "";
 
   const [favoriteList, setFavoriteList] = useState([]);
 
