@@ -29,8 +29,6 @@ export default function SearchResultScreen({ route }) {
   });
 
   useEffect(() => {
-    // console.log(searchInput || favorite.city);
-
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${
         searchInput || favorite.city
@@ -72,9 +70,10 @@ export default function SearchResultScreen({ route }) {
     >
       <View style={styles.container}>
         <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
-        <Pressable style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Add to Favorites</Text>
-        </Pressable>
+        {searchInput ?
+          <Pressable style={styles.button} onPress={handlePress}>
+            <Text style={styles.buttonText}>Add to Favorites</Text>
+          </Pressable> : <Text></Text> }
         <Pressable
           style={styles.button}
           onPress={() => nav.navigate("mainscreen")}
