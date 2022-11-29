@@ -27,7 +27,7 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
 
   useEffect(() => {
     getCurrentWeather();
-  }, [currentLat]);
+  }, [currentLat, currentLong]);
 
   return (
     <View style={styles.currentLocationStyle}>
