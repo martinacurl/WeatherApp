@@ -17,7 +17,7 @@ import WeatherFavorite from "../entities/WeatherFavorite";
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
 
-  const api_key = "";
+  const api_key = "5500869bb7a76a46adb61160ae56bf19";
 
   const nav = useNavigation();
 
