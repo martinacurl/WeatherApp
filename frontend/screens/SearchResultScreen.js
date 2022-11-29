@@ -17,7 +17,7 @@ import WeatherFavorite from "../entities/WeatherFavorite";
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
 
-  const api_key = "";
+  const api_key = "b68ff9cddd3274b2c71b65a0ce479b7c";
 
   const nav = useNavigation();
 
@@ -70,10 +70,13 @@ export default function SearchResultScreen({ route }) {
     >
       <View style={styles.container}>
         <WeatherDisplay currentCity={currentCity} weatherData={weatherData} />
-        {searchInput ?
+        {searchInput ? (
           <Pressable style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Add to Favorites</Text>
-          </Pressable> : <Text></Text> }
+          </Pressable>
+        ) : (
+          <Text></Text>
+        )}
         <Pressable
           style={styles.button}
           onPress={() => nav.navigate("mainscreen")}

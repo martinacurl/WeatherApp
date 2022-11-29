@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 10,
     padding: 10,
+    flex: 1,
+    flexGrow: 1,
   },
   text: {
     fontWeight: "bold",
