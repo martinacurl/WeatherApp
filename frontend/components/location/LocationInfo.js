@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react";
 import WeatherInfo from "../weather/WeatherInfo";
 
-const LocationInfo = ({ api_key }) => {
+const LocationInfo = () => {
   const [status, requestPermission] = Location.useForegroundPermissions();
 
   const [location, setLocation] = useState(null);
@@ -38,7 +38,6 @@ const LocationInfo = ({ api_key }) => {
   return (
     <View style={styles.currentLocationStyle}>
       <WeatherInfo
-        api_key={api_key}
         currentLat={!currentLat ? location?.coords.latitude : currentLat}
         currentLong={!currentLong ? location?.coords.longitude : currentLong}
       />
