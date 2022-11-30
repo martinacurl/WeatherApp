@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import WeatherDisplay from "./WeatherDisplay";
+import { API_KEY } from "@env";
 
-const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
+const WeatherInfo = ({ currentLat, currentLong }) => {
   const [currentCity, setCurrentCity] = useState();
   const [weatherData, setWeatherData] = useState({
     temp: null,
@@ -11,7 +12,7 @@ const WeatherInfo = ({ api_key, currentLat, currentLong }) => {
 
   const getCurrentWeather = () => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${currentLat}&lon=${currentLong}&appid=${api_key}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${currentLat}&lon=${currentLong}&appid=${API_KEY}&units=metric`
     )
       .then((res) => res.json())
       .then((body) => {

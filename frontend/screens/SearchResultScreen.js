@@ -13,11 +13,10 @@ import { useState, useEffect } from "react";
 import WeatherDisplay from "../components/weather/WeatherDisplay";
 import { insert, findAll } from "../utils/db";
 import WeatherFavorite from "../entities/WeatherFavorite";
+import { API_KEY } from "@env";
 
 export default function SearchResultScreen({ route }) {
   const { searchInput, favorite } = route.params;
-
-  const api_key = "b68ff9cddd3274b2c71b65a0ce479b7c";
 
   const nav = useNavigation();
 
@@ -32,7 +31,7 @@ export default function SearchResultScreen({ route }) {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${
         searchInput || favorite.city
-      }&appid=${api_key}&units=metric`
+      }&appid=${API_KEY}&units=metric`
     )
       .then((res) => res.json())
       .then((body) => {

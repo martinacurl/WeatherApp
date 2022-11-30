@@ -11,10 +11,9 @@ import LocationInfo from "../components/location/LocationInfo";
 import FavoriteList from "../components/favoriteList/FavoriteList";
 import { AppBar } from "@react-native-material/core";
 import { deleteByCityName, findAll } from "../utils/db";
+import { API_KEY } from "@env";
 
 export default function MainScreen() {
-  const api_key = "b68ff9cddd3274b2c71b65a0ce479b7c";
-
   const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function MainScreen() {
         </AppBar>
 
         {/* Current location weather or Malmö(default) */}
-        <LocationInfo api_key={api_key} />
+        <LocationInfo />
 
         {/* List of favorites */}
         <FavoriteList favoriteList={favoriteList} />
