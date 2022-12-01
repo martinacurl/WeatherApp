@@ -29,7 +29,7 @@ const FavoriteList = ({ favoriteList }) => {
         >
           <Text style={styles.favoriteText}>{favorite.city}</Text>
         </Pressable>
-        <Icon name="delete" size={30} color="black" onPress={handleDelete} />
+        <Icon name="delete" size={20} color="black" onPress={handleDelete} />
       </View>
     );
   };
