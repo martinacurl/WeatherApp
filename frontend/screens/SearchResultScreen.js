@@ -27,6 +27,8 @@ export default function SearchResultScreen({ route }) {
     weather: null,
   });
 
+  // fetching data from API,
+  // sending in the values from searchInput or favoriteList, depending from where it is sent 
   useEffect(() => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${
@@ -52,7 +54,7 @@ export default function SearchResultScreen({ route }) {
       .catch((e) => console.log(e));
   }, []);
 
-  // adding searched weatherlocation to favoritesList
+  // adding searched weatherlocation to favoritesList, and navigating back to main screen
   const handlePress = async () => {
     await insert(
       new WeatherFavorite(currentCity, geoResult.lat, geoResult.lon)

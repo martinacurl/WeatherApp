@@ -12,14 +12,15 @@ import { useState } from "react";
 const SearchBar = () => {
   // create navigation connection
   const nav = useNavigation();
+
   const [searchInput, setSearchInput] = useState("");
 
-  //sets input value to state
+  //takes in textinput and sets the searchInput value
   const handleInput = (input) => {
     setSearchInput(input);
   };
 
-  //Sending input (city) from the search bar to SearchResultScreen to show weather data
+  //Sending input (city) from the search bar to SearchResultScreen to get weather data
   const handleClick = () => {
     Keyboard.dismiss();
     setSearchInput("");

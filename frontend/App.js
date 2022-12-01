@@ -9,10 +9,10 @@ import { View, Text } from "react-native";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
-  //state to make sure db dont render and use db before finnish loading
+  //state to make sure db doesn't render and use db before loading is finished
   const [dbInit, setDbInit] = useState(false);
 
-  //useEffect to initilise db when weppapplication redners
+  //useEffect to initialise db when webbapplication renders
   useEffect(() => {
     initDB()
       .then((res) => {
@@ -25,7 +25,7 @@ export default function App() {
       });
   }, []);
 
-  //if statement if still loading
+  //if database still isn't initialised, returning a View with simple text
   if (!dbInit)
     return (
       <View>

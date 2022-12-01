@@ -22,7 +22,7 @@ const FavoriteList = ({ favoriteList }) => {
     };
 
     return (
-      <View style={styles.favotiteContainer}>
+      <View style={styles.favoriteContainer}>
         <Pressable
           style={styles.favoriteButton}
           onPress={() => nav.navigate("searchresultscreen", { favorite })}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 25,
   },
-  favotiteContainer: {
+  favoriteContainer: {
     justifyContent: "space-around",
     flexDirection: "row",
     alignItems: "center",
