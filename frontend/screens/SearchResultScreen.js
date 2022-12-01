@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import WeatherDisplay from "../components/weather/WeatherDisplay";
-import { insert, findAll } from "../utils/db";
+import { insert } from "../utils/db";
 import WeatherFavorite from "../entities/WeatherFavorite";
 import { API_KEY } from "@env";
 
