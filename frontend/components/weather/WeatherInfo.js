@@ -10,6 +10,7 @@ const WeatherInfo = ({ currentLat, currentLong }) => {
     weather: null,
   });
 
+  // fetching data from API, sending in the values from LocationInfo
   const getCurrentWeather = () => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${currentLat}&lon=${currentLong}&appid=${API_KEY}&units=metric`
@@ -25,7 +26,7 @@ const WeatherInfo = ({ currentLat, currentLong }) => {
       .catch((e) => console.log(e));
   };
 
-  //checking if currentLat and CurrentLong has a value before calling GetCurrentWeather
+  //checking if currentLat and CurrentLong have a value before calling GetCurrentWeather
   useEffect(() => {
     if (currentLat && currentLong) {
       getCurrentWeather();

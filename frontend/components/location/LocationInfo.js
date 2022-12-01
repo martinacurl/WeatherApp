@@ -10,14 +10,12 @@ const LocationInfo = () => {
   const [currentLat, setCurrentLat] = useState(null);
   const [currentLong, setCurrentLong] = useState(null);
 
-  // checking location permissions - if granted - get and set current position
-  // if not, setting default values(location) to Malmö
+  // checking location permissions - if granted - getting and setting current position
+  // if not, setting default values(latitude and longitude) to Malmö
   useEffect(() => {
     const getLocation = async () => {
       if (status?.granted === false && status?.canAskAgain !== false) {
         await requestPermission();
-        // setCurrentLat(55.6052931);
-        // setCurrentLong(13.0001566);
       } else if (status?.granted === true) {
         const loc = await Location.getCurrentPositionAsync();
         setLocation(loc);
@@ -27,11 +25,10 @@ const LocationInfo = () => {
       }
     };
 
-    getLocation(); //generate to fast?!
+    getLocation();
   }, [status]);
 
   if (status === null) {
-    console.log("nullvärde på status");
     return <View />;
   }
 

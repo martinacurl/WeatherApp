@@ -11,7 +11,6 @@ import LocationInfo from "../components/location/LocationInfo";
 import FavoriteList from "../components/favoriteList/FavoriteList";
 import { AppBar } from "@react-native-material/core";
 import { deleteByCityName, findAll } from "../utils/db";
-import { API_KEY } from "@env";
 
 export default function MainScreen() {
   const [favoriteList, setFavoriteList] = useState([]);
@@ -40,7 +39,6 @@ export default function MainScreen() {
       <View style={styles.container}>
         {/* SEARCHBAR */}
         <AppBar
-          // color="blue"
           tintColor="black"
           transparent="true"
           title="Todays Weather"
